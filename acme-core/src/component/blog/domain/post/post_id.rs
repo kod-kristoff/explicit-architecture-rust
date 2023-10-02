@@ -1,7 +1,3 @@
-<?php
-
-declare(strict_types=1);
-
 /*
  * This file is part of the Explicit Architecture POC,
  * which is created on top of the Symfony Demo application.
@@ -12,10 +8,21 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Acme\App\Core\Component\Blog\Domain\Post;
+use ulid::Ulid;
 
-use Acme\PhpExtension\Identity\AbstractUuidId;
+pub struct PostId(Ulid);
 
-final class PostId extends AbstractUuidId
-{
+impl Default for PostId {
+    fn default() -> Self {
+        Self::gen()
+    }
+}
+impl PostId {
+    pub fn new(value: Ulid) -> Self {
+        Self(value)
+    }
+
+    pub fn gen() -> Self {
+        Self::new(Ulid::new())
+    }
 }
